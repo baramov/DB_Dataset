@@ -13,21 +13,21 @@ A compact and efficient gizmo for Foundry Nuke designed to automate frame extrac
 
 ---
 
-## Interface & Controls
+## Controls
 
 The gizmo provides a clean and minimal control panel:
 
 * **Add** — Sets a keyframe on the current frame, adding it to the dataset.
 * **Remove** — Deletes the keyframe on the current frame, removing it from the dataset.
 * **Reset** — Completely clears all keyframes and wipes the dataset.
+* **Preserve Source RGBA** — Preserve the source image into a separate layer.
 * **Frame Counter** — Displays the total number of selected frames right next to the name.
-* **"Save Original" Checkbox** — Preserve the source image into a separate layer.
 
 ---
 
 ## Installation
 
-1. Copy the gizmo file into your `.nuke` directory or any custom plugin path defined in your `init.py`.
+1. Copy `DB_Dataset.gizmo` file into `.nuke` directory or any custom plugin path defined in `init.py`.
 2. Add the command to `menu.py` file:
 
 ```python
