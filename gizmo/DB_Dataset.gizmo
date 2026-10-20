@@ -1,0 +1,62 @@
+Group {
+ name DB_Dataset
+ autolabel nuke.thisNode().name()
+ tile_color 0x7f00ffff
+ selected true
+ xpos -40
+ ypos -364
+ addUserKnob {20 db_dataset l Dataset}
+ addUserKnob {26 ""}
+ addUserKnob {3 dataset l "" +STARTLINE}
+ dataset {{frame}}
+ addUserKnob {22 addframe l "    Add    " t "Add the current frame to the dataset" -STARTLINE T "# Add current frame to dataset knob as a keyframe\ndataset_knob = nuke.thisNode()\['dataset']\ndataset_knob.setAnimated()\ndataset_knob.setValue(nuke.frame())\n\n\n# Extract and sort frame numbers from dataset knob keyframes\ndataset_curve = dataset_knob.animations()\[0]\nkeyframes = sorted(\[key.x for key in dataset_curve.keys()])\n\n\n# Count total keyframes\nnumberframes = len(keyframes)\n\n\n# Define dataset sequence first and last frames\nfirst = int(nuke.Root()\['first_frame'].value())\nlast = first + numberframes\n\n\n# Set dataset sequence last frame\ndataset_range = nuke.toNode('set_range')\['last_frame']\ndataset_range.setExpression('')\ndataset_range.clearAnimated()\ndataset_range.setValue(last - 1)\n\n\n# Prepare dataset sequence\nappend_knob = nuke.toNode('append_set')\['firstFrame']\nappend_knob.setExpression('')\nappend_knob.clearAnimated()\nappend_knob.setAnimated()\n\n\n# Set dataset sequence\nfor i, src_frame in enumerate(keyframes):\n    target_frame = first + i\n    append_knob.setValueAt(src_frame, target_frame)\n\n\n# Update dataset total frames label\nautolabel_string = f\"nuke.thisNode().name() + ' (\{numberframes\})'\"\nnuke.thisNode()\['autolabel'].setValue(autolabel_string)"}
+ addUserKnob {22 removeframe l "    Remove    " t "Remove the current frame from the dataset." -STARTLINE T "# Check if animation and keyframe exist\ndataset_knob = nuke.thisNode()\['dataset']\nif dataset_knob.isAnimated(0):\n    if dataset_knob.isKey(0):\n\n\n        # Remove keyframe from dataset knob on current frame\n        dataset_knob.removeKey(0)\n\n\n        # Extract and sort frame numbers from dataset knob keyframes\n        dataset_curve = dataset_knob.animations()\[0]\n        keyframes = sorted(\[key.x for key in dataset_curve.keys()])\n\n\n        # Count total keyframes\n        numberframes = len(keyframes)\n\n\n        # Check if any keyframes remain\n        if numberframes > 0:\n            \n            # Define dataset sequence first and last frames\n            first = int(nuke.Root()\['first_frame'].value())\n            last = first + numberframes\n\n\n            # Set dataset sequence last frame\n            dataset_range = nuke.toNode('set_range')\['last_frame']\n            dataset_range.setExpression('')\n            dataset_range.clearAnimated()\n            dataset_range.setValue(last - 1)\n\n\n            # Prepare dataset sequence\n            append_knob = nuke.toNode('append_set')\['firstFrame']\n            append_knob.setExpression('')\n            append_knob.clearAnimated()\n            append_knob.setAnimated()\n\n\n            # Set dataset sequence\n            for i, src_frame in enumerate(keyframes):\n                target_frame = first + i\n                append_knob.setValueAt(src_frame, target_frame)\n\n\n            # Update dataset total frames label\n            autolabel_string = f\"nuke.thisNode().name() + ' (\{numberframes\})'\"\n            nuke.thisNode()\['autolabel'].setValue(autolabel_string)\n        else:\n            \n            # Reset dataset knob\n            node = nuke.thisNode()\n            node\['dataset'].clearAnimated()\n            node\['dataset'].setExpression('frame')\n            node\['label'].setValue('')\n\n\n            # Reset sequence\n            nuke.toNode('append_set')\['firstFrame'].clearAnimated()\n            nuke.toNode('append_set')\['firstFrame'].setExpression('frame')\n\n\n            # Reset sequence range\n            root_last = int(nuke.Root()\['last_frame'].value())\n            nuke.toNode('set_range')\['last_frame'].clearAnimated()\n            nuke.toNode('set_range')\['last_frame'].setValue(root_last)\n\n\n            # Clear dataset total frames label\n            nuke.thisNode()\['autolabel'].setValue(\"nuke.thisNode().name()\")"}
+ addUserKnob {22 resetframes l "    Reset    " t "Remove all frames from the dataset." -STARTLINE T "# Reset dataset knob\nnode = nuke.thisNode()\nnode\['dataset'].clearAnimated()\nnode\['dataset'].setExpression('frame')\nnode\['label'].setValue('')\n\n\n# Reset sequence\nnuke.toNode('append_set')\['firstFrame'].clearAnimated()\nnuke.toNode('append_set')\['firstFrame'].setExpression('frame')\n\n\n# Reset sequence range\nroot_last = int(nuke.Root()\['last_frame'].value())\nnuke.toNode('set_range')\['last_frame'].clearAnimated()\nnuke.toNode('set_range')\['last_frame'].setValue(root_last)\n\n\n# Clear dataset total frames label\nnuke.thisNode()\['autolabel'].setValue(\"nuke.thisNode().name()\")"}
+ addUserKnob {26 ""}
+ addUserKnob {6 savesource l "Preserve Source RGBA" t "Shuffles the source RGBA to a custom \"original\" layer." +STARTLINE}
+ addUserKnob {26 ""}
+ addUserKnob {26 credits l "" +STARTLINE T "<font size=2 color=#C86A4A><b>DB_Dataset 1.0 </b></font><font size=2> by Dmitry Baramov</a></font><br><br>"}
+}
+ Input {
+  inputs 0
+  name Sequence
+  xpos -140
+  ypos -169
+ }
+add_layer {original original.red original.green original.blue original.alpha}
+ Shuffle2 {
+  fromInput1 {
+   {0}
+   B
+  }
+  out1 original
+  fromInput2 {
+   {0}
+   B
+  }
+  mappings "4 rgba.red 0 0 original.red 0 0 rgba.green 0 1 original.green 0 1 rgba.blue 0 2 original.blue 0 2 rgba.alpha 0 3 original.alpha 0 3"
+  name save_original
+  xpos -140
+  ypos -129
+  disable {{1-parent.savesource}}
+ }
+ FrameHold {
+  firstFrame {{frame}}
+  name append_set
+  xpos -140
+  ypos -93
+ }
+ FrameRange {
+  first_frame {{root.first_frame}}
+  last_frame 1050
+  time ""
+  name set_range
+  xpos -140
+  ypos -49
+ }
+ Output {
+  name Output
+  xpos -140
+  ypos -9
+ }
+end_group
