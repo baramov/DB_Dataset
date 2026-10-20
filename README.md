@@ -25,7 +25,7 @@ The gizmo provides a clean and minimal control panel:
 
 ---
 
-## 📦 Installation
+## Installation
 
 1. Copy the gizmo file into your `.nuke` directory or any custom plugin path defined in your `init.py`.
 2. Add the command to `menu.py` file:
