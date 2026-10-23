@@ -1,6 +1,6 @@
 # DB Dataset
 
-A compact and efficient gizmo for Foundry Nuke designed to automate frame extraction for a **CopyCat** training. It eliminates the need for tedious manual setups involving multiple FrameHold and AppendClip nodes, allowing you to choose and compile frames in a single click.
+A compact and efficient gizmo for Foundry Nuke designed to automate frame extraction for a CopyCat training. It eliminates the need for tedious manual setups involving multiple FrameHold and AppendClip nodes, allowing you to choose and compile frames in a single click.
 
 ---
 
@@ -41,5 +41,5 @@ dbtoolset.addCommand("DB_Dataset", "nuke.createNode('DB_Dataset')")
 ---
 
 ## Compatibility
-- Supported Versions: **Nuke 13, 14, 15, and 16+**.
+- Supported Versions: **Nuke 13.0 or later**.
 - OS Compatibility: Windows, Linux, macOS.
