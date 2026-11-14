@@ -27,8 +27,9 @@ The gizmo provides a clean and minimal control panel:
 
 ## Installation
 
-1. Copy `DB_Dataset.gizmo` file into `.nuke` directory or any custom plugin path defined in `init.py`.
-2. Add the command to `menu.py` file:
+1. Download the latest version from the **[Releases page](https://github.com/baramov/DB_Dataset/releases)**.
+2. Copy `DB_Dataset.gizmo` file into `.nuke` directory or any custom plugin path defined in `init.py`.
+3. Add the command to `menu.py` file:
 
 ```python
 import nuke
