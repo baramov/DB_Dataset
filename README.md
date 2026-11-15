@@ -2,6 +2,8 @@
 
 A compact and efficient gizmo for Foundry Nuke designed to automate frame extraction for a CopyCat training. It eliminates the need for tedious manual setups involving multiple FrameHold and AppendClip nodes, allowing you to choose frames in a single click.
 
+<p align="center"><img width="2000" height="852" alt="db_dataset_preview" src="https://github.com/user-attachments/assets/6f327aee-e088-4ee7-9813-3859675a73f4" /></p>
+
 ---
 
 ## Core Features
